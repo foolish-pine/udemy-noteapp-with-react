@@ -8,6 +8,7 @@ import "App.css";
 
 export const App: FC = () => {
 	const [noteList, setNoteList] = useState<Note[] | []>([]);
+	const [activeNoteId, setActiveNoteId] = useState("");
 
 	const onAddNote = () => {
 		const newNote: Note = {
@@ -31,6 +32,8 @@ export const App: FC = () => {
 				noteList={noteList}
 				onAddNote={onAddNote}
 				onDeleteNote={onDeleteNote}
+				activeNoteId={activeNoteId}
+				setActiveNoteId={setActiveNoteId}
 			/>
 			<Main />
 		</div>

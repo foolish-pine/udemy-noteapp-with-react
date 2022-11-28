@@ -7,9 +7,17 @@ type Props = {
 	noteList: Note[];
 	onAddNote: () => void;
 	onDeleteNote: (id: string) => void;
+	activeNoteId: string;
+	setActiveNoteId: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const Sidebar: FC<Props> = ({ noteList, onAddNote, onDeleteNote }) => {
+export const Sidebar: FC<Props> = ({
+	noteList,
+	onAddNote,
+	onDeleteNote,
+	activeNoteId,
+	setActiveNoteId,
+}) => {
 	return (
 		<aside className="app-sidebar">
 			<div className="app-sidebar-header">
@@ -18,7 +26,17 @@ export const Sidebar: FC<Props> = ({ noteList, onAddNote, onDeleteNote }) => {
 			</div>
 			<div className="app-sidebar-notes">
 				{noteList.map((note) => (
-					<div className="app-sidebar-note" key={note.id}>
+					<div
+						className={
+							note.id === activeNoteId
+								? "app-sidebar-note is-active"
+								: "app-sidebar-note"
+						}
+						key={note.id}
+						onClick={() => {
+							setActiveNoteId(note.id);
+						}}
+					>
 						<div className="sidebar-note-title">
 							<strong>{note.title}</strong>
 							<button onClick={() => onDeleteNote(note.id)}>削除</button>
