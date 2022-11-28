@@ -26,6 +26,13 @@ export const App: FC = () => {
 		setNoteList(newNoteList);
 	};
 
+	const onUpdateNote = (updatedNote: Note) => {
+		const updatedNoteList = noteList.map((note) =>
+			note.id === updatedNote.id ? updatedNote : note
+		);
+		setNoteList(updatedNoteList);
+	};
+
 	const getActiveNote = (): Note | null => {
 		return noteList.find((note) => note.id === activeNoteId) ?? null;
 	};
@@ -39,7 +46,7 @@ export const App: FC = () => {
 				activeNoteId={activeNoteId}
 				setActiveNoteId={setActiveNoteId}
 			/>
-			<Main activeNote={getActiveNote()} />
+			<Main activeNote={getActiveNote()} onUpdateNote={onUpdateNote} />
 		</div>
 	);
 };
