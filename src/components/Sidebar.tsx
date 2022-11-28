@@ -1,23 +1,34 @@
 import { FC } from "react";
+import { Note } from "types/Note";
 
 import "components/Sidebar.css";
 
-export const Sidebar: FC = () => {
+type Props = {
+	noteList: Note[];
+	onAddNote: () => void;
+	onDeleteNote: (id: string) => void;
+};
+
+export const Sidebar: FC<Props> = ({ noteList, onAddNote, onDeleteNote }) => {
 	return (
 		<aside className="app-sidebar">
 			<div className="app-sidebar-header">
 				<h1>ノート</h1>
-				<button>追加</button>
+				<button onClick={onAddNote}>追加</button>
 			</div>
 			<div className="app-sidebar-notes">
-				<div className="app-sidebar-note">
-					<div className="sidebar-note-title">
-						<strong>タイトル</strong>
-						<button>削除</button>
+				{noteList.map((note) => (
+					<div className="app-sidebar-note" key={note.id}>
+						<div className="sidebar-note-title">
+							<strong>{note.title}</strong>
+							<button onClick={() => onDeleteNote(note.id)}>削除</button>
+						</div>
+						<p>{note.content}</p>
+						<small>
+							最終更新日：{new Date(note.modDate).toLocaleDateString("ja-JP")}
+						</small>
 					</div>
-					<p>ノートの内容です。</p>
-					<small>最終更新日：2022/12/01</small>
-				</div>
+				))}
 			</div>
 		</aside>
 	);
