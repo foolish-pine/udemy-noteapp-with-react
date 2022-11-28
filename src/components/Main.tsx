@@ -1,8 +1,17 @@
 import { FC } from "react";
+import { Note } from "types/Note";
 
 import "components/Main.css";
 
-export const Main: FC = () => {
+type Props = {
+	activeNote: Note | null;
+};
+
+export const Main: FC<Props> = ({ activeNote }) => {
+	if (activeNote === null) {
+		return <p className="no-active-note">ノートが選択されていません。</p>;
+	}
+
 	return (
 		<div className="app-main">
 			<div className="app-main-note-edit">
@@ -10,8 +19,8 @@ export const Main: FC = () => {
 				<textarea id="" placeholder="ノート内容を記入"></textarea>
 			</div>
 			<div className="app-main-note-preview">
-				<h1 className="preview-title">タイトル</h1>
-				<div className="markdown-preview">ノート内容</div>
+				<h1 className="preview-title">{activeNote.title}</h1>
+				<div className="markdown-preview">{activeNote.content}</div>
 			</div>
 		</div>
 	);

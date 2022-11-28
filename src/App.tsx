@@ -26,6 +26,10 @@ export const App: FC = () => {
 		setNoteList(newNoteList);
 	};
 
+	const getActiveNote = (): Note | null => {
+		return noteList.find((note) => note.id === activeNoteId) ?? null;
+	};
+
 	return (
 		<div className="App">
 			<Sidebar
@@ -35,7 +39,7 @@ export const App: FC = () => {
 				activeNoteId={activeNoteId}
 				setActiveNoteId={setActiveNoteId}
 			/>
-			<Main />
+			<Main activeNote={getActiveNote()} />
 		</div>
 	);
 };
