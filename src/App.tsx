@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import uuid from "react-uuid";
 import { Main } from "components/Main";
 import { Sidebar } from "components/Sidebar";
@@ -7,8 +7,16 @@ import { Note } from "types/Note";
 import "App.css";
 
 export const App: FC = () => {
-	const [noteList, setNoteList] = useState<Note[] | []>([]);
+	const [noteList, setNoteList] = useState<Note[] | []>(
+		localStorage.getItem("noteList") !== null
+			? (JSON.parse(localStorage.getItem("noteList") as string) as Note[])
+			: []
+	);
 	const [activeNoteId, setActiveNoteId] = useState("");
+
+	useEffect(() => {
+		localStorage.setItem("noteList", JSON.stringify(noteList));
+	}, [noteList]);
 
 	const onAddNote = () => {
 		const newNote: Note = {
