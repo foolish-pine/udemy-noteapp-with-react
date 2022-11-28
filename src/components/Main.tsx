@@ -1,4 +1,5 @@
 import { FC } from "react";
+import ReactMarkdown from "react-markdown";
 import { Note } from "types/Note";
 
 import "components/Main.css";
@@ -27,18 +28,21 @@ export const Main: FC<Props> = ({ activeNote, onUpdateNote }) => {
 				<input
 					type="text"
 					value={activeNote.title}
+					placeholder="タイトル"
 					onChange={(e) => onEditNote("title", e.target.value)}
 				/>
 				<textarea
 					id="content"
 					value={activeNote.content}
-					placeholder="ノート内容を記入"
+					placeholder="ノートを記入してください。"
 					onChange={(e) => onEditNote("content", e.target.value)}
 				></textarea>
 			</div>
 			<div className="app-main-note-preview">
 				<h1 className="preview-title">{activeNote.title}</h1>
-				<div className="markdown-preview">{activeNote.content}</div>
+				<ReactMarkdown className="markdown-preview">
+					{activeNote.content}
+				</ReactMarkdown>
 			</div>
 		</div>
 	);

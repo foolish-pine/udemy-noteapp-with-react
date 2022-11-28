@@ -13,8 +13,8 @@ export const App: FC = () => {
 	const onAddNote = () => {
 		const newNote: Note = {
 			id: uuid(),
-			title: "test-title",
-			content: "test-content",
+			title: "",
+			content: "",
 			modDate: Date.now(),
 		};
 
