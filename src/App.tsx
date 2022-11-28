@@ -12,11 +12,16 @@ export const App: FC = () => {
 			? (JSON.parse(localStorage.getItem("noteList") as string) as Note[])
 			: []
 	);
+	const sortedNoteList = noteList.sort((a, b) => b.modDate - a.modDate);
 	const [activeNoteId, setActiveNoteId] = useState("");
 
 	useEffect(() => {
 		localStorage.setItem("noteList", JSON.stringify(noteList));
 	}, [noteList]);
+
+	useEffect(() => {
+		setActiveNoteId(sortedNoteList[0].id);
+	}, []);
 
 	const onAddNote = () => {
 		const newNote: Note = {
@@ -48,7 +53,7 @@ export const App: FC = () => {
 	return (
 		<div className="App">
 			<Sidebar
-				noteList={noteList}
+				noteList={sortedNoteList}
 				onAddNote={onAddNote}
 				onDeleteNote={onDeleteNote}
 				activeNoteId={activeNoteId}
